@@ -3,12 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "dev": "nodemon src/server.js",
     "debug": "nodemon --inspect"
-    
   },
   "keywords": [],
   "author": "",
