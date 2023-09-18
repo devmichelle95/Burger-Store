@@ -2,6 +2,7 @@ import * as yup from "yup";
 import Product from "./../models/Product"
 import Categories from "./../models/Categories"
 import Orders from "./../schemas/Orders"
+import User from "./../models/User"
 
 class OrderController {
     async store(request, response) {
@@ -32,38 +33,79 @@ class OrderController {
                     model: Categories,
                     as: 'category',
                     attributes: ['name']
-                }
-            ]
+                },
+            ],
         })
 
-        const editedProducts = updatedProduct.map(product => {
+        const editedProduct = updatedProduct.map((product) => {
             const productIndex = request.body.products.findIndex(
                 (requestProduct) => requestProduct.id === product.id)
+
             const newProduct = {
                 id: product.id,
                 name: product.name,
                 price: product.price,
                 category: product.category.name,
-                URL: product.url,
+                url: product.url,
                 quantity: request.body.products[productIndex].quantity,
             }
-            
+
             return newProduct
         })
-        
+
         const order = {
-            user:
-            {
+            user: {
                 id: request.userId,
-                name: request.userName
+                name: request.userName,
             },
-            product: editedProducts,
-            status: "Pedido realizado"
+            products: editedProduct,
+            status: 'Orders Placed',
         }
 
         const orderResponse = await Orders.create(order)
 
         return response.status(201).json(orderResponse)
+    }
+
+    async index(request, response) {
+        const orders = await Orders.find()
+        return response.json(orders)
+    }
+
+    async update(request, response) {
+        const schema = yup.object().shape({
+            status: yup.string().required(),
+        })
+
+        try {
+            await schema.validateSync(request.body, { abortEarly: false })
+        }
+        catch (err) {
+            return response.status(400).json({ error: err.errors })
+        }
+        const{admin: isAdmin}  = await User.findByPk(request.userId)
+
+        if(!isAdmin){
+            return response.status(401).json({message: "You aren't authorized to this access"})
+            
+        }
+
+
+        const { id } = request.params
+        const { status } = request.body
+
+        try {
+            await Orders.updateOne({
+                _id: id
+            },
+                { status })
+            return response.json({ message: "Status updated successfully" })
+        }
+        catch (err) {
+            return response.status(400).json({ error: err.message })
+        }
+
+
     }
 }
 

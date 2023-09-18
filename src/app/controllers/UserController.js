@@ -23,7 +23,7 @@ class UserController {
         })
 
         if(userExist) {
-        return response.status(400).json({message: "User already exist"})
+        return response.status(409).json({message: "User already exist"})
         }
         
         console.log(userExist)

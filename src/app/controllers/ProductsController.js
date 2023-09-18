@@ -1,6 +1,7 @@
 import { response } from "express"
 import * as yup from "yup"
 import Product from "../models/Product"
+import User from "./../models/User"
 import Categories from "../models/Categories"
 
 class ProductsController {
@@ -15,6 +16,13 @@ class ProductsController {
             await schema.validateSync(request.body, {abortEarly:false})}
             catch(err){
                 return response.status(400).json({error: err.errors})
+        }
+
+        const{admin: isAdmin}  = await User.findByPk(request.userId)
+
+        if(!isAdmin){
+            return response.status(401).json({message: "You aren't authorized to this access"})
+            
         }
 
         const {filename: path} = request.file
@@ -43,6 +51,56 @@ class ProductsController {
         return response.json(products)
     }
 
+    async update (request,response) {
+        const schema = yup.object().shape({
+            name: yup.string(),
+            price: yup.number(),
+            offer:yup.boolean(),
+            category_id: yup.number(),
+        })
+        
+        try{
+            await schema.validateSync(request.body, {abortEarly:false})}
+            catch(err){
+                return response.status(400).json({error: err.errors})
+        }
+
+        const{admin: isAdmin}  = await User.findByPk(request.userId)
+
+        if(!isAdmin){
+            return response.status(401).json({message: "You aren't authorized to this access"})
+            
+        }
+
+        const {id} = request.params
+        
+        const updateProduct = await Product.findByPk(id)
+
+        if(!updateProduct){
+            return response.status(401).json({message:"This product dosen't exist"})
+        }
+
+        let path
+        if(request.file){
+            path = request.file.filename
+        }
+
+        const {name, price, offer, category_id}  = request.body
+        
+      await Product.update ({
+            name,
+            price,
+            offer,
+            category_id,
+            path,
+        },
+        {where:{id}}
+        )
+
+        console.log(request)
+
+        return response.status(200).json()
+    }
 }
 
 export default new ProductsController
