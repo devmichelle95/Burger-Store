@@ -1,8 +1,8 @@
 import * as yup from "yup";
-import Product from "./../models/Product"
-import Categories from "./../models/Categories"
-import Orders from "./../schemas/Orders"
-import User from "./../models/User"
+import Product from "./../models/Product.js"
+import Categories from "./../models/Categories.js"
+import Orders from "./../schemas/Orders.js"
+import User from "./../models/User.js"
 
 class OrderController {
     async store(request, response) {

@@ -1,5 +1,5 @@
 import { v4 } from "uuid"
-import User from "../models/User"
+import User from "../models/User.js"
 import * as yup from "yup"
 
 class UserController {

@@ -1,8 +1,8 @@
 import { response } from "express"
 import * as yup from "yup"
-import Product from "../models/Product"
-import User from "./../models/User"
-import Categories from "../models/Categories"
+import Product from "../models/Product.js"
+import User from "./../models/User.js"
+import Categories from "../models/Categories.js"
 
 class ProductsController {
     async store (request,response) {
