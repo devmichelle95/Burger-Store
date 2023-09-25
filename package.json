@@ -7,10 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "start": "node src/server.js",
     "debug": "nodemon --inspect"
   },
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
