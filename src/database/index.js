@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import User from "../app/models/User.js";
 import Product from "../app/models/Product.js";
 import Categories from "../app/models/Categories.js";
+import { DATABASE_URL } from "../config/database.js";
 
 const models = [User, Product, Categories]
 
@@ -12,7 +13,7 @@ class Database {
         this.mongo()
     }
     init() {
-        this.connection = new Sequelize('postgresql://postgres:RUZEym0YpgCJdO9OuQRg@containers-us-west-47.railway.app:7325/railway')
+        this.connection = new Sequelize(DATABASE_URL)
         models
         .map(model => model.init(this.connection))
         .map(
