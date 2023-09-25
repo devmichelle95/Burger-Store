@@ -11,18 +11,6 @@
     "debug": "nodemon --inspect"
   },
   
-    "$schema": "https://railway.app/railway.schema.json",
-    "build": {
-      "builder": "NIXPACKS"
-    },
-    "deploy": {
-      "numReplicas": 1,
-      "startCommand": "yarn dev",
-      "healthcheckPath": "/",
-      "restartPolicyType": "ON_FAILURE",
-      "healthcheckTimeout": 3000,
-      "restartPolicyMaxRetries": 10
-    },
   "keywords": [],
   "author": "",
   "license": "ISC",
