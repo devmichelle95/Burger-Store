@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "start":"serve build -s -n -L -p $PORT",
+    "start": "nodemon src/server.js",
     "debug": "nodemon --inspect"
   },
   "keywords": [],
@@ -27,7 +27,6 @@
     "pg": "^8.11.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1",
-    "serve": "^14.2.1",
     "uuid": "^9.0.0",
     "yarn": "^1.22.19",
     "yup": "^1.2.0"
