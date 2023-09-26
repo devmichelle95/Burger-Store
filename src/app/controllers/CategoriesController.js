@@ -68,7 +68,7 @@ class CategoryController {
             
         }
         const {name }= request.body
-        const {id} = request.params
+        //const {id} = request.params
         
         const updateCategory = await Categories.findByPk(id)
 
@@ -82,9 +82,7 @@ class CategoryController {
         }
 
         
-      await Category.update ({name,path},{where:{id,}})
-
-        console.log(request)
+      await Category.update ({name,path},{where:{id}})
 
         return response.status(200).json()
     }
