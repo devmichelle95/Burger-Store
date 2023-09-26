@@ -5,10 +5,16 @@ import cors from "cors"
 
 import "./database/index.js"
 
+const corsOptions = {
+  Origin: 'https://api-burger-store-production.up.railway.app',
+  Credentials: true
+  }
+  
+
 class App {
   constructor() {
     this.app = express()
-    this.app.use(cors())
+    this.app.use(cors(corsOptions))
     this.middlewares()
     this.routes()
   }
