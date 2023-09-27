@@ -7,7 +7,8 @@ import "./database/index.js"
 
 const corsOptions = {
   Origin: 'https://api-burger-store-production.up.railway.app',
-  Credentials: true
+  Credentials: true,
+  ClearSiteData: "cache"
   }
   
 
